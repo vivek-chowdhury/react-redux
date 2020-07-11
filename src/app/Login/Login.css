@@ -1,0 +1,20 @@
+.loginContainer {
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightSection {
+  min-width: 460px;
+  /* border: 0.5px gray solid; */
+  padding: 30px;
+  align-self: flex-end;
+}
+
+.leftSection {
+  min-width: 300px;
+}
+
+.loginImageContainer {
+  display: block;
+}

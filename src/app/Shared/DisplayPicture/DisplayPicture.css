@@ -1,0 +1,16 @@
+.displayPicture {
+  width: 250px;
+  height: 250px;
+}
+
+.pictureContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nameHolder {
+  max-width: 250px;
+  flex-wrap: wrap;
+  overflow: hidden;
+  color: dodgerblue;
+}

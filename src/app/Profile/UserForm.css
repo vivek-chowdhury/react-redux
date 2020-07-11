@@ -1,0 +1,18 @@
+.generalSectionContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.generalSection {
+  width: 80%;
+  padding-right: 50px;
+}
+
+.secondaryInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.inline-Column {
+  width: 300px;
+}

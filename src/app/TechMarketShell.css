@@ -1,0 +1,8 @@
+.rootContainer {
+  height: 100vh;
+  /* height: 100%; */
+}
+
+.contentContainer {
+  padding-top: 80px;
+}
