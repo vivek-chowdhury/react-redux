@@ -9,10 +9,12 @@ import Profile from "./Profile/Profile";
 import About from "./About/About";
 import ContactUs from "./ContactUs/ContactUs";
 import Login from "./Login/Login";
+import { connect } from "react-redux";
+// import { validateUser } from "./Login/loginActions";
 
 function TechMarketShell(props) {
   function enforceAuthentication(component, path, user) {
-    if (!user) {
+    if (!user.userId && !user.password) {
       return <Redirect exact from={path} to="/" />;
     }
     return <Route exact path={path} component={component} />;
@@ -24,9 +26,9 @@ function TechMarketShell(props) {
       <div className="container-fluid contentContainer">
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/feeds" component={Feeds} />
-          {/* <Route path="/profile" component={Profile} /> */}
-          {enforceAuthentication(Profile, "/profile", {})}
+          {/* <Route path="/feeds" component={Feeds} /> */}
+          {enforceAuthentication(Feeds, "/feeds", props.user)}
+          <Route path="/profile" component={Profile} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={ContactUs} />
         </Switch>
@@ -36,4 +38,9 @@ function TechMarketShell(props) {
   );
 }
 
-export default TechMarketShell;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+export default connect(mapStateToProps)(TechMarketShell);

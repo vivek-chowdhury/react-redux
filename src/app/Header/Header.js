@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { NavLink, Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 function Header(props) {
   const [isListening, setIsListening] = useState(false);
@@ -42,16 +43,18 @@ function Header(props) {
                 Feeds
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                className={
-                  doChangeBackground ? "nav_link_light" : "nav_link_dark"
-                }
-                to="/profile"
-              >
-                Profile
-              </NavLink>
-            </li>
+            {props.user.id && (
+              <li className="nav-item">
+                <NavLink
+                  className={
+                    doChangeBackground ? "nav_link_light" : "nav_link_dark"
+                  }
+                  to="/profile"
+                >
+                  Profile
+                </NavLink>
+              </li>
+            )}
           </ul>
 
           <ul className="navbar-nav right-options">
@@ -92,4 +95,9 @@ function Header(props) {
   );
 }
 
-export default Header;
+function mapToStateProps(state) {
+  return {
+    user: state.user,
+  };
+}
+export default connect(mapToStateProps)(Header);

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import LoginForm from "./LoginForm/LoginForm";
 import bubbleimage from "./../../assets/placeholders/bubble-image.png";
-import * as LoginServices from "./../../api/LoginServices";
+// import * as LoginServices from "./../../api/LoginServices";
+import { connect } from "react-redux";
+import * as validateUser from "./loginActions";
+import { bindActionCreators } from "redux";
 
 function Login(props) {
   const [user, setUser] = useState({ userId: "", password: "" });
@@ -15,18 +18,31 @@ function Login(props) {
     });
   };
 
+  useEffect(() => {
+    if (props.user.id !== "") {
+      props.history.push("/feeds");
+    }
+    if (props.user.error !== "") {
+      updateErrorMessage();
+    }
+  }, [props.history, props.user]);
+
+  const updateErrorMessage = () => {
+    setError("Invalid User naem or Password, please try again !");
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(user);
-    LoginServices.validateUser(user.userId, user.password).then((response) => {
-      console.log(response);
-      if (!response.error) {
-        props.history.push("/feeds");
-      } else {
-        setError("Invalid User naem or Password, please try again !");
-        // TODO: Need to display error message
-      }
-    });
+    // LoginServices.validateUser(user.userId, user.password).then((response) => {
+    //   console.log(response);
+    //   if (!response.error) {
+    //     props.history.push("/feeds");
+    //   } else {
+    //     setError("Invalid User naem or Password, please try again !");
+    //     // TODO: Need to display error message
+    //   }
+    // });
+    props.actions.validateUser(user);
   };
 
   return (
@@ -48,4 +64,16 @@ function Login(props) {
   );
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(validateUser, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

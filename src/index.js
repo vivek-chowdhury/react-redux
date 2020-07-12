@@ -6,11 +6,16 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import TechMarketShell from "./app/TechMarketShell";
+import { Provider } from "react-redux";
+import configurationStore from "./app/configureStore";
 
+const store = configurationStore();
 ReactDOM.render(
-  <Router>
-    <TechMarketShell />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <TechMarketShell />
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 
