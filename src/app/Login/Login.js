@@ -6,6 +6,7 @@ import * as LoginServices from "./../../api/LoginServices";
 
 function Login(props) {
   const [user, setUser] = useState({ userId: "", password: "" });
+  const [error, setError] = useState("");
 
   const handleChange = ({ target }) => {
     setUser({
@@ -19,7 +20,12 @@ function Login(props) {
     console.log(user);
     LoginServices.validateUser(user.userId, user.password).then((response) => {
       console.log(response);
-      props.history.push("/feeds");
+      if (!response.error) {
+        props.history.push("/feeds");
+      } else {
+        setError("Invalid User naem or Password, please try again !");
+        // TODO: Need to display error message
+      }
     });
   };
 
@@ -34,6 +40,7 @@ function Login(props) {
             onTextChange={handleChange}
             {...user}
             onSubmit={handleSubmit}
+            error={error}
           />
         </div>
       </div>

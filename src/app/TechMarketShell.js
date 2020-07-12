@@ -26,7 +26,7 @@ function TechMarketShell(props) {
           <Route path="/" exact component={Login} />
           <Route path="/feeds" component={Feeds} />
           {/* <Route path="/profile" component={Profile} /> */}
-          {enforceAuthentication(Profile, "/profile", null)}
+          {enforceAuthentication(Profile, "/profile", {})}
           <Route path="/about" component={About} />
           <Route path="/contact" component={ContactUs} />
         </Switch>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 function LoginForm(props) {
   return (
     <form className="form-horizontal" onSubmit={props.onSubmit}>
+      {props.error && <div className="alert alert-danger">{props.error}</div>}
       <FormInput
         inputId="userId"
         inputType="text"

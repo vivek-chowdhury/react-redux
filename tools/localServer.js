@@ -59,8 +59,8 @@ server.get("/login/", function (req, res, next) {
     }
   }
   if (!match || match.length === 0) {
-    const error = { errorCode: 404, error: "No record found" };
-    res.status(404).send(error);
+    const error = { errorCode: 401, error: "No record found" };
+    res.status(401).send(error);
   }
   // next();
 });
@@ -73,8 +73,8 @@ server.get("/login/validateUserId/", function (req, res, next) {
     const message = { message: "No match found" };
     res.status(200).send(message);
   } else {
-    const error = { errorCode: 404, error: "User id already exist" };
-    res.status(404).send(error);
+    const error = { errorCode: 401, error: "User id already exist" };
+    res.status(401).send(error);
   }
 });
 
