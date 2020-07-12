@@ -19,7 +19,7 @@
     "prestart:api": "node tools/createMockDatabase.js",
     "start:api": "node tools/localServer.js",
     "start": "run-p start:api start:dev",
-    "start:dev": "react-scripts start",
+    "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "json-server": "^0.16.1",
     "npm-run-all": "^4.1.5"
   }

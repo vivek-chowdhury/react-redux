@@ -46,6 +46,38 @@ server.post("/users/", function (req, res, next) {
   }
 });
 
+server.get("/login/", function (req, res, next) {
+  const query = req.query;
+  const users = router.db.getState().users;
+  let match;
+  if (users) {
+    match = users.filter((u) => {
+      return u.id === query.userid && u.password === query.password;
+    });
+    if (match && match.length > 0) {
+      res.status(200).send(match[0]);
+    }
+  }
+  if (!match || match.length === 0) {
+    const error = { errorCode: 404, error: "No record found" };
+    res.status(404).send(error);
+  }
+  // next();
+});
+
+server.get("/login/validateUserId/", function (req, res, next) {
+  const query = req.query;
+  const users = router.db.getState().users;
+  let match = isUserIdUnique(users, query.userid);
+  if (!match || match.length === 0) {
+    const message = { message: "No match found" };
+    res.status(200).send(message);
+  } else {
+    const error = { errorCode: 404, error: "User id already exist" };
+    res.status(404).send(error);
+  }
+});
+
 // Use default router
 server.use(router);
 
@@ -54,6 +86,16 @@ const port = 3001;
 server.listen(port, () => {
   console.log(`JSON Server is running on port ${port}`);
 });
+
+function isUserIdUnique(users, userid) {
+  let match;
+  if (users) {
+    match = users.filter((u) => {
+      return u.id === userid;
+    });
+  }
+  return match;
+}
 
 function validateUser(user) {
   if (!user.userId) return "User id is required.";

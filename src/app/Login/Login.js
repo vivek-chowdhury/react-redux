@@ -2,11 +2,27 @@ import React, { useState } from "react";
 import "./Login.css";
 import LoginForm from "./LoginForm/LoginForm";
 import bubbleimage from "./../../assets/placeholders/bubble-image.png";
+import * as LoginServices from "./../../api/LoginServices";
 
-function Login() {
-  const [user] = useState({ userid: "", password: "" });
-  const handleChange = ({ target }) => {};
-  const handleSubmit = () => {};
+function Login(props) {
+  const [user, setUser] = useState({ userId: "", password: "" });
+
+  const handleChange = ({ target }) => {
+    setUser({
+      ...user,
+      [target.name]: target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(user);
+    LoginServices.validateUser(user.userId, user.password).then((response) => {
+      console.log(response);
+      props.history.push("/feeds");
+    });
+  };
+
   return (
     <div style={{ backgroundImage: `url(${bubbleimage})` }}>
       {/* <div>
