@@ -25,7 +25,7 @@ function Login(props) {
     if (props.user.error !== "") {
       updateErrorMessage();
     }
-  }, [props.history, props.user]);
+  }, [props.history, props.user, props]);
 
   const updateErrorMessage = () => {
     setError("Invalid User naem or Password, please try again !");

@@ -4,6 +4,7 @@ const initialUser = {
   id: "",
   password: "",
   error: "",
+  isLoggedIn: false,
 };
 
 export default function loginReducer(state = initialUser, action) {
@@ -13,7 +14,10 @@ export default function loginReducer(state = initialUser, action) {
       return {
         ...state,
         ...action.response,
+        isLoggedIn: true,
       };
+    case Actions.SIGN_OUT_LOGGEDIN_USER:
+      return initialUser;
     default:
       return state;
   }

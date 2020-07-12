@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import "./TechMarketShell.css";
 
 import Feeds from "./Feeds/Feeds";
@@ -10,7 +10,7 @@ import About from "./About/About";
 import ContactUs from "./ContactUs/ContactUs";
 import Login from "./Login/Login";
 import { connect } from "react-redux";
-// import { validateUser } from "./Login/loginActions";
+import { signOutUser } from "./Login/loginActions";
 
 function TechMarketShell(props) {
   function enforceAuthentication(component, path, user) {
@@ -19,10 +19,20 @@ function TechMarketShell(props) {
     }
     return <Route exact path={path} component={component} />;
   }
-  console.log(process.env.BASE_URL, "BASE_URL===>");
+
+  const hangleSignIn = (event) => {
+    event.preventDefault();
+    if (!props.user.isLoggedIn) {
+      props.history.push("/");
+    } else {
+      props.signOutUser();
+      props.history.push("/");
+    }
+  };
+
   return (
     <div className="rootContainer">
-      <Header />
+      <Header onSignIn={hangleSignIn} />
       <div className="container-fluid contentContainer">
         <Switch>
           <Route path="/" exact component={Login} />
@@ -43,4 +53,11 @@ function mapStateToProps(state) {
     user: state.user,
   };
 }
-export default connect(mapStateToProps)(TechMarketShell);
+
+const mapDispatchToProps = {
+  signOutUser,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TechMarketShell));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
 function Header(props) {
@@ -78,16 +78,17 @@ function Header(props) {
                 Contact Us
               </NavLink>
             </li>
-            <Link
-              to=""
+            <button
               className={
                 doChangeBackground
                   ? "btn btn-outline-light"
                   : "btn btn-outline-primary"
               }
+              onClick={props.onSignIn}
             >
-              Sign In
-            </Link>
+              {" "}
+              {!props.user.isLoggedIn ? "Sign In" : "Sign Out"}
+            </button>
           </ul>
         </div>
       </div>
