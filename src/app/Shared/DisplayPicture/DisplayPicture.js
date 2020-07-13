@@ -11,7 +11,9 @@ function DisplayPicture(props) {
         className="displayPicture"
         alt="Logo"
       ></img>
-      {props.name && <div className="nameHolder">{props.name}</div>}
+      {props.fname && props.lname && (
+        <div className="nameHolder">{props.fname + " " + props.lname}</div>
+      )}
     </div>
   );
 }

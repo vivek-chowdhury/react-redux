@@ -23,7 +23,9 @@ const data = JSON.stringify({
   projects,
 });
 const dbFilePath = path.join(__dirname, "db.json");
-
-fs.writeFile(dbFilePath, data, function (err) {
-  err ? console.log(err) : console.log("Mock DB created.");
-});
+const hasDatabase = false; //fs.exists(dbFilePath);
+if (!hasDatabase) {
+  fs.writeFile(dbFilePath, data, function (err) {
+    err ? console.log(err) : console.log("Mock DB created.");
+  });
+}

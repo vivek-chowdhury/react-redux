@@ -1,21 +1,23 @@
 import React from "react";
-import FormInput from "./../Shared/FormInput/FormInput";
-import DisplayPicture from "./../Shared/DisplayPicture/DisplayPicture";
-import ComboBox from "./../Shared/ComboBox/ComboBox";
+import FormInput from "../../Shared/FormInput/FormInput";
+import DisplayPicture from "../../Shared/DisplayPicture/DisplayPicture";
+import ComboBox from "../../Shared/ComboBox/ComboBox";
 import "./UserForm.css";
 
 function UserForm(props) {
   return (
     <form className="form-horizontal" onSubmit={props.onSubmit}>
+      {props.error && <div className="alert alert-danger">{props.error}</div>}
       <div className="generalSectionContainer">
         <div className="generalSection">
           <FormInput
-            inputId="userId"
+            inputId="id"
             inputType="text"
-            inputValue={props.userId}
+            inputValue={props.id}
             onTextChange={props.onTextChange}
             inputPlaceholder="Enter user id"
             inputLabel="User id :"
+            disabled={props.isLoggedIn}
           ></FormInput>
           <FormInput
             inputId="password"
@@ -42,9 +44,9 @@ function UserForm(props) {
             inputLabel="Last Name :"
           ></FormInput>
           <FormInput
-            inputId="email"
+            inputId="emailId"
             inputType="email"
-            inputValue={props.email}
+            inputValue={props.emailId}
             onTextChange={props.onTextChange}
             inputPlaceholder="Enter email"
             inputLabel="Email :"
@@ -53,7 +55,8 @@ function UserForm(props) {
         <DisplayPicture
           displayPicture={props.displayPicture}
           gender={props.gender}
-          name={props.name}
+          fname={props.fname}
+          lname={props.lname}
         />
       </div>
       <span className="secondaryInfo">
@@ -106,7 +109,13 @@ function UserForm(props) {
         <div className="col-sm-offset-2 col-sm-10">
           <div className="checkbox">
             <label>
-              <input type="checkbox" name="iAgree"></input>
+              <input
+                type="checkbox"
+                name="iAgree"
+                id="iAgree"
+                checked={props.iAgree}
+                onChange={props.onTextChange}
+              ></input>
               <span> I agress all terms and conditions</span>
             </label>
           </div>

@@ -1,20 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import "./TechMarketShell.css";
 
 import Feeds from "./Feeds/Feeds";
-import Profile from "./Profile/Profile";
+import Profile from "./User/Profile/Profile";
+import Login from "./User/Login/Login";
 import About from "./About/About";
 import ContactUs from "./ContactUs/ContactUs";
-import Login from "./Login/Login";
-import { connect } from "react-redux";
-import { signOutUser } from "./Login/loginActions";
+import { signOutUser } from "./User/state/userActions";
 
 function TechMarketShell(props) {
   function enforceAuthentication(component, path, user) {
-    if (!user.userId && !user.password) {
+    console.log(user, !user.isLoggedIn);
+    if (!user.isLoggedIn) {
       return <Redirect exact from={path} to="/" />;
     }
     return <Route exact path={path} component={component} />;
@@ -22,12 +23,10 @@ function TechMarketShell(props) {
 
   const hangleSignIn = (event) => {
     event.preventDefault();
-    if (!props.user.isLoggedIn) {
-      props.history.push("/");
-    } else {
+    if (props.user.isLoggedIn) {
       props.signOutUser();
-      props.history.push("/");
     }
+    props.history.push("/");
   };
 
   return (

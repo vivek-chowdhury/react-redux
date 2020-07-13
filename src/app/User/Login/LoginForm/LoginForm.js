@@ -1,5 +1,5 @@
 import React from "react";
-import FormInput from "./../../Shared/FormInput/FormInput";
+import FormInput from "../../../Shared/FormInput/FormInput";
 import { Link } from "react-router-dom";
 
 function LoginForm(props) {
@@ -7,10 +7,10 @@ function LoginForm(props) {
     <form className="form-horizontal" onSubmit={props.onSubmit}>
       {props.error && <div className="alert alert-danger">{props.error}</div>}
       <FormInput
-        inputId="userId"
+        inputId="id"
         inputType="text"
-        inputValue={props.userId}
-        onTextChange={props.onTextChange}
+        inputValue={props.id}
+        onTextChange={props.onChange}
         inputPlaceholder="Enter user id"
         inputLabel="User id :"
       ></FormInput>
@@ -18,7 +18,7 @@ function LoginForm(props) {
         inputId="password"
         inputType="password"
         inputValue={props.password}
-        onTextChange={props.onTextChange}
+        onTextChange={props.onChange}
         inputPlaceholder="Enter password"
         inputLabel="Password :"
       ></FormInput>
@@ -26,7 +26,12 @@ function LoginForm(props) {
         <div className="col-sm-offset-2 col-sm-10">
           <div className="checkbox">
             <label>
-              <input type="checkbox" name="iAgree"></input>
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={props.rememberMe}
+                onChange={props.onChange}
+              ></input>
               <span> Remember me</span>
             </label>
           </div>

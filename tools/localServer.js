@@ -11,6 +11,7 @@ console.log("Database created at : ", dbPath);
 const middlewares = jsonServer.defaults({
   // Display json-server's built in homepage when json-server starts.
   static: "./node_modules/json-server/public",
+  noCors: false,
 });
 
 // Set default middlewares (logger, static, cors and no-cache)
@@ -19,9 +20,30 @@ server.use(middlewares);
 // To handle POST, PUT and PATCH you need to use a body-parser. Using JSON Server's bodyParser
 server.use(jsonServer.bodyParser);
 
+// server.use(
+//   jsonServer.rewriter({
+//     "/users/:id": "/users?id:=id",
+//   })
+// );
+
 // Simulate delay on all requests
 server.use(function (req, res, next) {
-  setTimeout(next, 0);
+  res.header("Access-Control-Allow-Origin", "*");
+
+  if (req.headers["access-control-request-method"]) {
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS");
+  }
+  if (req.headers["access-control-request-headers"]) {
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  }
+
+  res.header("Access-Control-Max-Age", 60 * 60 * 24 * 365);
+
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    setTimeout(next, 1000);
+  }
 });
 
 // Add createdAt to all POSTS
@@ -37,12 +59,37 @@ server.use((req, res, next) => {
   next();
 });
 
+server.put("/users/:id", function (req, res, next) {
+  const params = req.params;
+  const users = router.db.getState().users;
+  const match = isUserIdUnique(users, params.id);
+  if (match && match.length > 0) {
+    res.status(200);
+    next();
+  } else {
+    const error = { status: 404, message: "Invalid user id" };
+    res.status(200).send(error);
+  }
+});
+
 server.post("/users/", function (req, res, next) {
   const error = validateUser(req.body);
   if (error) {
     res.status(400).send(error);
   } else {
-    next();
+    const body = req.body;
+    const users = router.db.getState().users;
+    const match = isUserIdUnique(users, body.id);
+    if (match && match.length > 0) {
+      const error = {
+        status: 409,
+        error:
+          "Duplicate user, user id mentioned in the request already exist !",
+      };
+      res.status(200).send(error);
+    } else {
+      next();
+    }
   }
 });
 
@@ -98,8 +145,8 @@ function isUserIdUnique(users, userid) {
 }
 
 function validateUser(user) {
-  if (!user.userId) return "User id is required.";
-  if (!user.passwore) return "Password is required.";
-  if (!user.email) return "Email id is required.";
+  if (!user.id) return "User id is required.";
+  if (!user.password) return "Password is required.";
+  if (!user.emailId) return "Email id is required.";
   return "";
 }

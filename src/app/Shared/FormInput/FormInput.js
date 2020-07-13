@@ -28,6 +28,7 @@ function FormInput(props) {
           name={props.inputId}
           value={props.inputValue}
           onChange={props.onTextChange}
+          disabled={props.disabled}
         ></input>
       </div>
       {props.error && <div className="alert alert-danger">{props.error}</div>}

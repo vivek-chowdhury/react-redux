@@ -4,9 +4,16 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
 function Header(props) {
+  // Contains true if scroll event is added.
   const [isListening, setIsListening] = useState(false);
+
+  // contains true if window is scrolled by user
   const [doChangeBackground, setDoChangeBackground] = useState(false);
 
+  /**
+   * @description This function is responsible for adding scroll event listener and
+   * removing it when Header is removed from display list.
+   */
   useEffect(() => {
     if (!isListening) {
       setIsListening(true);
@@ -19,6 +26,12 @@ function Header(props) {
     };
   }, [isListening]);
 
+  /**
+   * @description This method is invoked when user scroll window, it is responsible
+   * for setting member variable which will further change the background color of header
+   * component.
+   * @param {*} event
+   */
   const handleScroll = (event) => {
     event.preventDefault();
     setDoChangeBackground(window.scrollY > 40);
@@ -33,17 +46,19 @@ function Header(props) {
       <div className="container">
         <div className="collapse navbar-collapse full-width">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <NavLink
-                className={
-                  doChangeBackground ? "nav_link_light" : "nav_link_dark"
-                }
-                to="/feeds"
-              >
-                Feeds
-              </NavLink>
-            </li>
-            {props.user.id && (
+            {props.user.isLoggedIn && (
+              <li className="nav-item">
+                <NavLink
+                  className={
+                    doChangeBackground ? "nav_link_light" : "nav_link_dark"
+                  }
+                  to="/feeds"
+                >
+                  Feeds
+                </NavLink>
+              </li>
+            )}
+            {props.user.isLoggedIn && (
               <li className="nav-item">
                 <NavLink
                   className={
@@ -86,7 +101,6 @@ function Header(props) {
               }
               onClick={props.onSignIn}
             >
-              {" "}
               {!props.user.isLoggedIn ? "Sign In" : "Sign Out"}
             </button>
           </ul>
@@ -96,6 +110,10 @@ function Header(props) {
   );
 }
 
+/**
+ * @description This method retrieve slice of state from store
+ * @param {*} state
+ */
 function mapToStateProps(state) {
   return {
     user: state.user,
