@@ -14,7 +14,6 @@ import { signOutUser } from "./User/state/userActions";
 
 function TechMarketShell(props) {
   function enforceAuthentication(component, path, user) {
-    console.log(user, !user.isLoggedIn);
     if (!user.isLoggedIn) {
       return <Redirect exact from={path} to="/" />;
     }

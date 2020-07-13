@@ -42,7 +42,7 @@ server.use(function (req, res, next) {
   if (req.method === "OPTIONS") {
     res.sendStatus(200);
   } else {
-    setTimeout(next, 1000);
+    setTimeout(next, 0);
   }
 });
 
