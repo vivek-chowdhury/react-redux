@@ -18,8 +18,11 @@ function ComboBox(props) {
 
   const renderOptions = (o) => {
     return (
-      <option key={o.id} value={o.id}>
-        {o.name}
+      <option
+        key={props.optionId ? o[props.optionId] : o.id}
+        value={props.optionId ? o[props.optionId] : o.id}
+      >
+        {props.optionName ? o[props.optionName] : o.name}
       </option>
     );
   };

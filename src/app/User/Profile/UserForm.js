@@ -96,6 +96,26 @@ function UserForm(props) {
           inputClass="col-sm-8 inline-Column"
         ></FormInput>
       </span>
+      <span className="secondaryInfo">
+        <ComboBox
+          selectId="role"
+          label="Roles"
+          options={props.roles}
+          inputClass="col-sm-8 inline-Column"
+          onSelectionChange={props.onTextChange}
+          optionName="roleName"
+          value={props.role}
+        />
+        <ComboBox
+          selectId="userType"
+          label="User Type"
+          options={props.userTypes}
+          inputClass="col-sm-8 inline-Column"
+          onSelectionChange={props.onTextChange}
+          optionName="typeName"
+          value={props.role}
+        />
+      </span>
       <FormInput
         inputId="description"
         inputType="text"

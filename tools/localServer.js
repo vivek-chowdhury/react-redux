@@ -93,6 +93,25 @@ server.post("/users/", function (req, res, next) {
   }
 });
 
+server.get("/languages/", function (req, res, next) {
+  const languages = router.db.getState().languages;
+  if (languages && languages.length > 0) {
+    res.status(200);
+  }
+  next();
+});
+
+server.get("/schemaOptions/", function (req, res, next) {
+  const db = router.db.getState();
+  const result = {
+    languages: db.languages,
+    roles: db.roles,
+    userTypes: db.userTypes,
+    permissions: db.permissions,
+  };
+  res.status(200).send(result);
+});
+
 server.get("/login/", function (req, res, next) {
   const query = req.query;
   const users = router.db.getState().users;

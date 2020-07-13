@@ -86,7 +86,7 @@ const roles = [
     ],
   },
   {
-    id: "rol002",
+    id: "rol003",
     roleName: "Guest",
     permissionList: [
       {
@@ -106,19 +106,19 @@ const userTypes = [
     typeName: "Developer",
   },
   {
-    id: "type002",
+    id: "type003",
     typeName: "Manager",
   },
   {
-    id: "type003",
+    id: "type004",
     typeName: "HR",
   },
   {
-    id: "type004",
+    id: "type005",
     typeName: "Designer",
   },
   {
-    id: "type005",
+    id: "type006",
     typeName: "Qaulity",
   },
 ];
