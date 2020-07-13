@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
+import ReactDOM from "react-dom";
 
+import DialogBox from "./../../Shared/Dialog/DialogBox";
 import UserForm from "./UserForm";
 import { updateProfile, registerUser } from "./../state/userActions";
 
@@ -40,6 +42,10 @@ function Profile(props) {
 
   const [error, setError] = useState("");
 
+  const [showDialog, setShowDialog] = useState(false);
+
+  const dialogRef = useRef(null);
+
   /**
    * @description This method is invoked when user change anything in input field. It stores the
    * updated value in member variable.
@@ -73,6 +79,19 @@ function Profile(props) {
     }
   };
 
+  const handleAddSkillRequest = () => {
+    ReactDOM.createPortal(dialogRef, document.getElementById("root"));
+    setShowDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+  };
+
+  const handleDialogSave = () => {
+    setShowDialog(false);
+  };
+
   return (
     <React.Fragment>
       <h2>User Profile</h2>
@@ -83,8 +102,17 @@ function Profile(props) {
           {...user}
           genderOptions={genderOptions}
           error={error}
+          onAddSkillClicked={handleAddSkillRequest}
         />
       </div>
+      <DialogBox
+        ref={dialogRef}
+        show={showDialog}
+        onClose={handleDialogClose}
+        onSave={handleDialogSave}
+      >
+        <div>This is test dialog box, i am testing component right now</div>
+      </DialogBox>
     </React.Fragment>
   );
 }

@@ -104,6 +104,16 @@ function UserForm(props) {
         inputPlaceholder="Enter short description"
         inputLabel="Short Description :"
       ></FormInput>
+      <label htmlFor="skillAdd" className="pr-3">
+        Add Skills
+      </label>
+      <input
+        id="skillAdd"
+        type="button"
+        className="btn btn-primary"
+        onClick={props.onAddSkillClicked}
+        value="+"
+      ></input>
 
       <div className="form-group">
         <div className="col-sm-offset-2 col-sm-10">

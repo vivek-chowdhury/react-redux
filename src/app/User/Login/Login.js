@@ -63,18 +63,20 @@ function Login(props) {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${bubbleimage})` }}>
-      <div className="loginContainer">
-        <div className="rightSection card border-primary mb-3">
-          <LoginForm
-            onChange={handleChange}
-            {...user}
-            onSubmit={handleSubmit}
-            error={error}
-          />
+    <>
+      <div style={{ backgroundImage: `url(${bubbleimage})` }}>
+        <div className="loginContainer">
+          <div className="rightSection card border-primary mb-3">
+            <LoginForm
+              onChange={handleChange}
+              {...user}
+              onSubmit={handleSubmit}
+              error={error}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
